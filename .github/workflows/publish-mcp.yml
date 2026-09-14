@@ -1,0 +1,29 @@
+name: Publish to MCP Registry
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: mcp-registry-publish
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Publish io.beanhub/mcp
+        env:
+          MCP_PRIVATE_KEY: ${{ secrets.MCP_PRIVATE_KEY }}
+          MCP_AUTH_METHOD: http
+          MCP_DOMAIN: beanhub.io
+        run: |
+          set -euo pipefail
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            export MCP_SERVER_VERSION="${GITHUB_REF_NAME#v}"
+          fi
+          ./scripts/publish-mcp.sh

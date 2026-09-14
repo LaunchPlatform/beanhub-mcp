@@ -1,0 +1,8 @@
+.direnv/
+.devenv/
+.devenv.local.nix
+.tools/
+key.pem
+mcp-registry-auth
+.env
+.envrc.local

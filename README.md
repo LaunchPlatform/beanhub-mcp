@@ -48,7 +48,56 @@ git merge origin/master
 git push github master
 ```
 
-For Gemini CLI gallery, add the GitHub topic `gemini-cli-extension`. Official registry namespace `io.beanhub/mcp` needs DNS or HTTP verification on [beanhub.io](https://beanhub.io). See [Publishing remote servers](https://modelcontextprotocol.io/registry/remote-servers).
+For Gemini CLI gallery, add the GitHub topic `gemini-cli-extension`.
+
+## Official MCP Registry
+
+This repo publishes **metadata only** for the hosted server `https://api.beanhub.io/mcp`. The registry name is `io.beanhub/mcp`. That namespace needs HTTP or DNS proof on [beanhub.io](https://beanhub.io), not GitHub OIDC. Docs: [remote servers](https://modelcontextprotocol.io/registry/remote-servers), [authentication](https://modelcontextprotocol.io/registry/authentication), [GitHub Actions](https://modelcontextprotocol.io/registry/github-actions).
+
+Do not run `mcp-publisher init`. It would overwrite `server.json`.
+
+### devenv
+
+```bash
+direnv allow   # or: devenv shell
+mcp-validate
+mcp-gen-auth   # writes gitignored key.pem + mcp-registry-auth
+```
+
+Host the one-line proof at `https://beanhub.io/.well-known/mcp-registry-auth` (HTTP) or as a TXT record on the apex `beanhub.io` (DNS). Then:
+
+```bash
+mcp-publish
+```
+
+`mcp-publish` reads `MCP_PRIVATE_KEY` (64 hex chars) or `./key.pem`. Default auth method is HTTP. For DNS: `MCP_AUTH_METHOD=dns mcp-publish`.
+
+Without devenv:
+
+```bash
+./scripts/validate-mcp.sh
+./scripts/gen-mcp-registry-auth.sh
+./scripts/publish-mcp.sh
+```
+
+### GitHub Actions
+
+`CI` runs `./scripts/validate-mcp.sh` on pulls and pushes to `master`.
+
+`Publish to MCP Registry` runs on `v*` tags and on `workflow_dispatch`. Create a GitHub Environment named `mcp-registry-publish`, store `MCP_PRIVATE_KEY` as an **environment** secret (not a repo secret), and restrict the environment to `master` and tags. Then:
+
+```bash
+git tag v1.0.0
+git push github v1.0.0
+```
+
+A tag `v1.0.0` publishes version `1.0.0` (the committed `server.json` is not rewritten). Versions are immutable. Bump the tag for later metadata-only updates.
+
+Confirm:
+
+```bash
+curl -sS "https://registry.modelcontextprotocol.io/v0.1/servers?search=io.beanhub/mcp"
+```
 
 ## Links
 
