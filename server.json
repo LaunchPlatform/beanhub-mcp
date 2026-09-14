@@ -5,6 +5,11 @@
   "description": "Read and update hosted Beancount books over OAuth. No CLI access token.",
   "version": "1.0.0",
   "websiteUrl": "https://docs.beanhub.io/guides/mcp/",
+  "repository": {
+    "url": "https://github.com/LaunchPlatform/beanhub-mcp",
+    "source": "github",
+    "id": "1369115897"
+  },
   "icons": [
     {
       "src": "https://beanhub.io/images/favicon.svg",

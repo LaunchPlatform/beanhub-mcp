@@ -7,6 +7,7 @@
     "email": "support@beanhub.io"
   },
   "homepage": "https://docs.beanhub.io/guides/mcp/",
+  "repository": "https://github.com/LaunchPlatform/beanhub-mcp",
   "license": "MIT",
   "keywords": [
     "beancount",

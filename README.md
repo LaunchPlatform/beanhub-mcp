@@ -35,29 +35,20 @@ Write tools (only if you turn on updates): `create_entries`, `update_entry`, `de
 
 The app cannot mint access tokens, change billing, connect a bank, dump Connect or Inbox data, make a book public, or delete a book.
 
-## Publish this to GitHub
+## Public source
 
-Cursor, Claude Code, Gemini CLI, and the official registry `repository.source` field expect a public GitHub repo. Create `LaunchPlatform/beanhub-mcp` as a public repository, then:
+The public copy is [https://github.com/LaunchPlatform/beanhub-mcp](https://github.com/LaunchPlatform/beanhub-mcp). Cursor, Claude Code, Gemini CLI, and the official registry `repository.source` field use that GitHub repo.
+
+To pull Amendable updates and push GitHub:
 
 ```bash
-git clone https://amendable.io/r/fangpenlin/beanhub-mcp.git
 cd beanhub-mcp
-git remote add github https://github.com/LaunchPlatform/beanhub-mcp.git
-git push -u github master
+git fetch origin
+git merge origin/master
+git push github master
 ```
 
-Amendable Git HTTPS uses your Amendable username and an access token as the password. After the GitHub repo exists, add a `repository` object to `server.json`:
-
-```json
-"repository": {
-  "url": "https://github.com/LaunchPlatform/beanhub-mcp",
-  "source": "github"
-}
-```
-
-Set the same GitHub URL on `.cursor-plugin/plugin.json` and `plugin.json` (`repository`). For Gemini CLI gallery, add the GitHub topic `gemini-cli-extension`.
-
-Official registry namespace `io.beanhub/mcp` needs DNS or HTTP verification on [beanhub.io](https://beanhub.io). See [Publishing remote servers](https://modelcontextprotocol.io/registry/remote-servers).
+For Gemini CLI gallery, add the GitHub topic `gemini-cli-extension`. Official registry namespace `io.beanhub/mcp` needs DNS or HTTP verification on [beanhub.io](https://beanhub.io). See [Publishing remote servers](https://modelcontextprotocol.io/registry/remote-servers).
 
 ## Links
 
