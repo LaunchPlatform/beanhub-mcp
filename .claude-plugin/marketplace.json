@@ -1,0 +1,31 @@
+{
+  "name": "beanhub-mcp",
+  "owner": {
+    "name": "Launch Platform",
+    "email": "support@beanhub.io"
+  },
+  "metadata": {
+    "description": "BeanHub hosted MCP plugin for Claude Code."
+  },
+  "plugins": [
+    {
+      "name": "beanhub",
+      "source": "./",
+      "description": "Read and update your hosted Beancount books.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Launch Platform",
+        "email": "support@beanhub.io"
+      },
+      "homepage": "https://docs.beanhub.io/guides/mcp/",
+      "license": "MIT",
+      "keywords": [
+        "beancount",
+        "accounting",
+        "ledger",
+        "mcp"
+      ],
+      "logo": "assets/logo.svg"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "beanhub",
+  "version": "1.0.0",
+  "description": "Read and update your hosted Beancount books.",
+  "author": {
+    "name": "Launch Platform",
+    "email": "support@beanhub.io"
+  },
+  "homepage": "https://docs.beanhub.io/guides/mcp/",
+  "license": "MIT",
+  "keywords": [
+    "beancount",
+    "accounting",
+    "ledger",
+    "mcp",
+    "bookkeeping"
+  ],
+  "logo": "assets/logo.svg"
+}

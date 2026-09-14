@@ -1,0 +1,10 @@
+{
+  "name": "beanhub",
+  "version": "1.0.0",
+  "description": "Read and update your hosted Beancount books.",
+  "mcpServers": {
+    "beanhub": {
+      "httpUrl": "https://api.beanhub.io/mcp"
+    }
+  }
+}

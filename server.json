@@ -1,0 +1,23 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.beanhub/mcp",
+  "title": "BeanHub",
+  "description": "Read and update hosted Beancount books over OAuth. No CLI access token.",
+  "version": "1.0.0",
+  "websiteUrl": "https://docs.beanhub.io/guides/mcp/",
+  "icons": [
+    {
+      "src": "https://beanhub.io/images/favicon.svg",
+      "mimeType": "image/svg+xml",
+      "sizes": [
+        "any"
+      ]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://api.beanhub.io/mcp"
+    }
+  ]
+}
