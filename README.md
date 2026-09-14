@@ -43,7 +43,7 @@ Cursor, Claude Code, Gemini CLI, and the official registry `repository.source` f
 git clone https://amendable.io/r/fangpenlin/beanhub-mcp.git
 cd beanhub-mcp
 git remote add github https://github.com/LaunchPlatform/beanhub-mcp.git
-git push -u github main
+git push -u github master
 ```
 
 Amendable Git HTTPS uses your Amendable username and an access token as the password. After the GitHub repo exists, add a `repository` object to `server.json`:
