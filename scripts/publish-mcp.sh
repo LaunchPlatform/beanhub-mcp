@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 # Publish server.json to the official MCP Registry (io.beanhub/mcp).
 # Requires domain proof on beanhub.io (HTTP well-known or DNS TXT) and
-# MCP_PRIVATE_KEY or key.pem.
+# MCP_PRIVATE_KEY, secrets.sops.yaml, or key.pem.
 #
 # Env:
 #   MCP_PRIVATE_KEY        Ed25519 private key as 64 hex chars
-#   MCP_PRIVATE_KEY_FILE   PEM path (default ./key.pem)
+#   MCP_SOPS_FILE          SOPS YAML with MCP_PRIVATE_KEY (default ./secrets.sops.yaml)
+#   MCP_PRIVATE_KEY_FILE   PEM path (overrides SOPS; default ./key.pem if no SOPS file)
 #   MCP_AUTH_METHOD        http (default) or dns
 #   MCP_DOMAIN             beanhub.io
 #   MCP_SERVER_VERSION     if set, publish that version without editing the repo copy

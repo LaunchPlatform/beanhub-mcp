@@ -66,7 +66,7 @@ mcp-gen-auth   # encrypts MCP_PRIVATE_KEY into secrets.sops.yaml + gitignored mc
 
 The publisher key is stored in `secrets.sops.yaml`, encrypted with SOPS using PGP fingerprint `A57616E62A499B512EDA662E0FC8D7008588874B`. Edit later with `sops secrets.sops.yaml`. Commit the encrypted file; do not commit `key.pem`.
 
-Host the one-line proof at `https://beanhub.io/.well-known/mcp-registry-auth` (HTTP) or as a TXT record on the apex `beanhub.io` (DNS). Then:
+The public proof is served from the Hugo site as `static/.well-known/mcp-registry-auth`. Deploy [beanhub.io](https://github.com/LaunchPlatform/beanhub.io) so `https://beanhub.io/.well-known/mcp-registry-auth` returns that one line. DNS alternative: TXT on the apex `beanhub.io`. Then:
 
 ```bash
 mcp-publish

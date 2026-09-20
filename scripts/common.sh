@@ -10,6 +10,7 @@ MCP_PUBLISHER_VERSION="${MCP_PUBLISHER_VERSION:-1.8.1}"
 MCP_DOMAIN="${MCP_DOMAIN:-beanhub.io}"
 MCP_AUTH_METHOD="${MCP_AUTH_METHOD:-http}"
 MCP_ALGORITHM="${MCP_ALGORITHM:-ed25519}"
+MCP_SOPS_FILE="${MCP_SOPS_FILE:-${ROOT}/secrets.sops.yaml}"
 TOOLS_DIR="${ROOT}/.tools"
 PUBLISHER_BIN="${TOOLS_DIR}/mcp-publisher"
 
@@ -97,17 +98,40 @@ hex_private_key_from_pem() {
   openssl pkey -in "${pem}" -noout -text | grep -A3 "priv:" | tail -n +2 | tr -d ' :\n'
 }
 
+decrypt_sops_private_key() {
+  local file="$1"
+  if ! command -v sops >/dev/null 2>&1; then
+    echo "sops is required to decrypt ${file} (enter the devenv shell)." >&2
+    exit 1
+  fi
+  local key
+  key="$(sops -d --input-type yaml --output-type json "${file}" | jq -r '.MCP_PRIVATE_KEY // empty')"
+  if [[ -z "${key}" || "${key}" == "null" ]]; then
+    echo "${file} has no MCP_PRIVATE_KEY." >&2
+    exit 1
+  fi
+  printf '%s' "${key}"
+}
+
 resolve_private_key() {
   if [[ -n "${MCP_PRIVATE_KEY:-}" ]]; then
     printf '%s' "${MCP_PRIVATE_KEY}"
     return 0
   fi
-  local pem="${MCP_PRIVATE_KEY_FILE:-${ROOT}/key.pem}"
+  if [[ -n "${MCP_PRIVATE_KEY_FILE:-}" ]]; then
+    hex_private_key_from_pem "${MCP_PRIVATE_KEY_FILE}"
+    return 0
+  fi
+  if [[ -f "${MCP_SOPS_FILE}" ]]; then
+    decrypt_sops_private_key "${MCP_SOPS_FILE}"
+    return 0
+  fi
+  local pem="${ROOT}/key.pem"
   if [[ -f "${pem}" ]]; then
     hex_private_key_from_pem "${pem}"
     return 0
   fi
-  echo "Set MCP_PRIVATE_KEY (64-char hex) or MCP_PRIVATE_KEY_FILE / key.pem." >&2
+  echo "Set MCP_PRIVATE_KEY, encrypt MCP_PRIVATE_KEY in ${MCP_SOPS_FILE}, or provide MCP_PRIVATE_KEY_FILE / key.pem." >&2
   exit 1
 }
 
