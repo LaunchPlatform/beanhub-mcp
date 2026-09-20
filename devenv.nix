@@ -7,6 +7,7 @@
     pkgs.jq
     pkgs.openssl
     pkgs.python3
+    pkgs.sops
   ];
 
   env.MCP_DOMAIN = "beanhub.io";
@@ -30,6 +31,7 @@
     echo "  commands  mcp-validate | mcp-publish | mcp-gen-auth"
     echo "  docs      README.md"
     echo "  openssl   $(openssl version)"
+    echo "  sops      $(sops --version --disable-version-check)"
   '';
 
   enterTest = ''

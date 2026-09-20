@@ -61,8 +61,10 @@ Do not run `mcp-publisher init`. It would overwrite `server.json`.
 ```bash
 direnv allow   # or: devenv shell
 mcp-validate
-mcp-gen-auth   # writes gitignored key.pem + mcp-registry-auth
+mcp-gen-auth   # encrypts MCP_PRIVATE_KEY into secrets.sops.yaml + gitignored mcp-registry-auth
 ```
+
+The publisher key is stored in `secrets.sops.yaml`, encrypted with SOPS using PGP fingerprint `A57616E62A499B512EDA662E0FC8D7008588874B`. Edit later with `sops secrets.sops.yaml`. Commit the encrypted file; do not commit `key.pem`.
 
 Host the one-line proof at `https://beanhub.io/.well-known/mcp-registry-auth` (HTTP) or as a TXT record on the apex `beanhub.io` (DNS). Then:
 
@@ -70,7 +72,7 @@ Host the one-line proof at `https://beanhub.io/.well-known/mcp-registry-auth` (H
 mcp-publish
 ```
 
-`mcp-publish` reads `MCP_PRIVATE_KEY` (64 hex chars) or `./key.pem`. Default auth method is HTTP. For DNS: `MCP_AUTH_METHOD=dns mcp-publish`.
+`mcp-publish` reads `MCP_PRIVATE_KEY` (64 hex chars), decrypts `./secrets.sops.yaml`, or falls back to `./key.pem`. Default auth method is HTTP. For DNS: `MCP_AUTH_METHOD=dns mcp-publish`.
 
 Without devenv:
 
